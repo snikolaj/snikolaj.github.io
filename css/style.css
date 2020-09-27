@@ -1,0 +1,56 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #333;
+    color: #fff;
+}
+
+.navbar {
+    border-bottom: #008ed6 3px solid;
+    opacity: 0.9;
+}
+
+.carousel-item {
+    height: 450px;
+}
+
+.myfooter {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.carousel-image-1 {
+    background: url(../img/p3r5SE.png);
+    background-size: cover;
+}
+
+.carousel-image-2 {
+    background: url(../img/poetryanalyzer.png);
+    background-size: cover;
+}
+
+.carousel-image-3 {
+    background: url(../img/pongclone.png);
+    background-size: cover;
+}
+
+.carousel-image-4 {
+    background: url(../img/w3dclone.png);
+    background-size: cover;
+}
+
+.height-offset {
+    height: 0px;
+}
+
+.shadowed-text p{
+    color: white;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-size: 2vw;
+}
+
+.linebreak {
+    height: 5vh;
+}
