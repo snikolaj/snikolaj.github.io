@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Contact us - Brand</title>
-    <meta name="description" content="A blog about my adventures in the tech world">
+    <title>Playscribe</title>
+    <meta name="description" content="A tool to assist you in learning how to analyze plays">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
@@ -30,37 +30,44 @@
         </div>
         </div>
     </nav>
-    <header class="masthead" style="background-image: url(&quot;assets/img/code2.PNG&quot;);">
+    <header class="masthead" style="background-image:url('assets/img/home-bg.jpg');">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-lg-8 mx-auto">
                     <div class="site-heading">
-                        <h1>My main project at the moment</h1><span class="subheading">ProgramKitsForEveryone</span></div>
+                        <h1>Clean Blog</h1><span class="subheading">A Blog Theme by Start Bootstrap</span></div>
                 </div>
             </div>
         </div>
     </header>
-    <hr>
     <div>
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
-                    <h2>How it all started</h2>
-                    <p>One day I was on the KDE subreddit and found an interesting link. It was to a competition organized by the GNOME foundation. One thing led to another, and a few months later I was declared one of the 20 winners of the first phase.</p>
-                    <h2>The idea</h2>
-                    <p>My idea was inspired by something interesting I saw on the internet a while ago. I was interested in retro computers, and found out that before sharing programs on storage media was common, people had to read programs from magazines
-                        and write them out themselves, thereby learning programming. My idea was a reimagining of that, but using modern free and open source programs, so that anyone can access and build with these programs.</p>
-                    <h2>The outreach</h2>
-                    <p>What made me very happy and motivated was the response in my school to my project. I tried a similar version of the project even before the comptetition, but this really made me passionate about creating and helping other people learn
-                        programming. Not only did my friends love the idea, but my school decided to dedicate an entire class every Wednesday to teaching beginners programming.</p>
+                <div class="col-md-6">
+                    <p>Click the button on the top right to generate a practice question and a snippet from a play for analysis.<br>Click the button on the bottom right to open an area inside the page for writing.</p>
                 </div>
-                <div class="col-md-4">
-                    <figure class="figure"><img class="img-fluid figure-img" src="assets/img/CEChallenge-P1Winner2.png">
-                        <figcaption class="figure-caption text-center">The cool badge I got!</figcaption>
-                    </figure>
-                    <p>Fun fact: I used Edubuntu with GNOME in primary school way before I even knew what Linux or GNOME was. It feels so amazing to work with a company whose product I used extensively for such a long time.</p>
-                </div>
+                <div class="col-md-6"><button class="btn btn-primary" type="button" onclick="generatePractice()">Generate Practice Question</button>
+                    <hr><button class="btn btn-primary" type="button" onclick="toggleWritingArea()">Open/Close In-page Writing Area</button></div>
+            </div>
+        </div>
+    </div>
+    <div id="writingArea">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"><textarea></textarea></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h1>Question:</h1>
+                <hr>
+                <p id="question"></p>
+                <h1>Excerpt:</h1>
+                <p id="scene"></p>
             </div>
         </div>
     </div>
@@ -82,6 +89,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/clean-blog.js"></script>
+    <script src="assets/js/playscribe.js"></script>
     <script src="assets/js/w3d.js"></script>
 </body>
 
