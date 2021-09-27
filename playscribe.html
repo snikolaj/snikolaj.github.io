@@ -24,8 +24,8 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="about.html">About Me</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="contact.html">Programkitsforeveryone</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="3r.html">3R project</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="w3d.html">Play my w3d clone</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index-1.html">Home</a></li>
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="playscribe.html">Playscribe</a></li>
                 </ul>
         </div>
         </div>
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-md-10 col-lg-8 mx-auto">
                     <div class="site-heading">
-                        <h1>Clean Blog</h1><span class="subheading">A Blog Theme by Start Bootstrap</span></div>
+                        <h1>Playscribe</h1><span class="subheading">A simple tool to practice play analysis</span></div>
                 </div>
             </div>
         </div>
@@ -45,7 +45,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>Click the button on the top right to generate a practice question and a snippet from a play for analysis.<br>Click the button on the bottom right to open an area inside the page for writing.</p>
+                    <p>Click the button on the top right to generate a practice question and a scene from a play for analysis.<br>Click the button on the bottom right to open an area inside the page for writing.<br>Over 60 questions and over 700 scenes from
+                        Shakespeare plays are available!</p>
                 </div>
                 <div class="col-md-6"><button class="btn btn-primary" type="button" onclick="generatePractice()">Generate Practice Question</button>
                     <hr><button class="btn btn-primary" type="button" onclick="toggleWritingArea()">Open/Close In-page Writing Area</button></div>
@@ -55,7 +56,9 @@
     <div id="writingArea">
         <div class="container">
             <div class="row">
-                <div class="col-md-12"><textarea></textarea></div>
+                <div class="col-md-12">
+                    <hr>
+                    <p>The writing area below can be freely expanded and copied, but it won't save your text.</p><textarea class="form-control-lg" spellcheck="true" style="resize: both;"></textarea></div>
             </div>
         </div>
     </div>
@@ -64,8 +67,8 @@
             <div class="col">
                 <hr>
                 <h1>Question:</h1>
-                <hr>
                 <p id="question"></p>
+                <hr>
                 <h1>Excerpt:</h1>
                 <p id="scene"></p>
             </div>
