@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>8051 IO ports | Stefan Nikolaj’s blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="8051 IO ports" />
+<meta name="author" content="Stefan Nikolaj" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Blog post describing the IO ports of the 8051 microcontroller" />
+<meta property="og:description" content="Blog post describing the IO ports of the 8051 microcontroller" />
+<link rel="canonical" href="http://localhost:4000/8051-microcontroller/2022/03/29/8051-io.html" />
+<meta property="og:url" content="http://localhost:4000/8051-microcontroller/2022/03/29/8051-io.html" />
+<meta property="og:site_name" content="Stefan Nikolaj’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-29T11:30:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="8051 IO ports" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Stefan Nikolaj"},"dateModified":"2022-03-29T11:30:00+02:00","datePublished":"2022-03-29T11:30:00+02:00","description":"Blog post describing the IO ports of the 8051 microcontroller","headline":"8051 IO ports","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/8051-microcontroller/2022/03/29/8051-io.html"},"url":"http://localhost:4000/8051-microcontroller/2022/03/29/8051-io.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style"
+        type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+<body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+        <h1 class="project-name">8051 IO ports</h1>
+        <h2 class="project-tagline">Blog post describing the IO ports of the 8051 microcontroller</h2>
+        
+    </header>
+
+
+    <main id="content" class="main-content" role="main">
+        <i>
+    Categories: 8051-microcontroller
+    <br>
+    Written by
+    
+    <a href="/about/">Stefan Nikolaj</a>
+    
+    <br>
+    29 Mar 2022
+</i>
+<hr>
+<figure>
+<img src="/images/8051-io-ports.png" alt="Image of the 8051's IO ports" style="display:block;margin:auto;" />
+<figcaption style="text-align:center"><i>8051 IO circuit</i></figcaption>
+</figure>
+<p>When you set a port as 1, you enable its pull-up resistor. It can’t source much current (“enough for 3 LSTTL loads”). When you read from a port, you’re not reading the value you set it as, rather you’re reading the voltage present at the pin. If you’ve set a port as 1 and something is pulling it low, you’ll see 0. However if you’ve set it to 0, then it’s straight to ground, so if something connected to that pin is outputting a 1, you’ll have a short circuit. This is why setting a pin as a 1 is effectively turning it into an input, and a pull-up, and an active high at the same time. It’s clever, it’s simple, and it’s called quasi-bidirectional!</p>
+
+<p>Similarly to the serial, the register that you write to to output a value is different from the one you read to. This is evident from the diagram, as values you write directly set a latch, while the values you read are only the voltage present at each pin at the time you read it. This means that setting a port to all 1s and reading for 0s is effortless, though rather different from what you might be used to coming from PIC or AVR.</p>
+
+<p>Sourcing much current is impossible from the chips themselves, however if you use a latch you can obtain high current sinking and sourcing. This also works well for protection and you can even use a bit of clever circuitry to obtain many more inputs or outputs using latches and shift registers which can source, sink and even tri-state.</p>
+
+<p>One small issue that these kinds of ports have, which might be a dealbreaker in some projects, is the fact that if you set the port to 0, then the pull-up resistor is still there, sourcing current constantly. This consumes a small amount of power constantly, however in most cases this is beyond negligible.</p>
+
+<p>If you use the datasheet to calculate the current sourcing ability of the pins, you would get a result that gives you an approximate 50Kohm value for the internal pull-up resistor. So, to better understand the 8051’s quasi-bidirectional inner workings, I built the circuit from the hardware manual to show you how it works. I changed it a bit for clarity, but trust me, it’s the same one. Fight me on this.</p>
+
+<figure>
+<img src="/images/8051-io-port-equivalent.jpg" alt="Image of the 8051's IO ports, circuit on breadboard" style="display:block;margin:auto;" />
+<figcaption style="text-align:center"><i>8051 IO equivalent circuit on breadboard</i></figcaption>
+</figure>
+
+<p>The circuit is simple, it uses two pushbuttons that simulate the microcontroller writing as an output, and a buffer which simulates what you’d get if you read the input (red LED on means high, red LED off means low). You can also see that the part that contains the input and the output are completely separate “registers”.</p>
+
+
+        <footer class="site-footer">
+            <a href="/">Homepage</a><br>Written, designed and built by <a
+                href="/about/">Stefan Nikolaj</a>. Hosted on GitHub
+            Pages.
+        </footer>
+    </main>
+</body>
+
+</html>
+
+<style>
+    a:link {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>

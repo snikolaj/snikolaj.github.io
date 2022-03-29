@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>8051 Clocking | Stefan Nikolaj’s blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="8051 Clocking" />
+<meta name="author" content="Stefan Nikolaj" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Blog post about the clocking an 8051" />
+<meta property="og:description" content="Blog post about the clocking an 8051" />
+<link rel="canonical" href="http://localhost:4000/8051-microcontroller/2022/03/26/post.html" />
+<meta property="og:url" content="http://localhost:4000/8051-microcontroller/2022/03/26/post.html" />
+<meta property="og:site_name" content="Stefan Nikolaj’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-26T15:40:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="8051 Clocking" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Stefan Nikolaj"},"dateModified":"2022-03-26T15:40:00+01:00","datePublished":"2022-03-26T15:40:00+01:00","description":"Blog post about the clocking an 8051","headline":"8051 Clocking","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/8051-microcontroller/2022/03/26/post.html"},"url":"http://localhost:4000/8051-microcontroller/2022/03/26/post.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style"
+        type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+<body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+        <h1 class="project-name">8051 Clocking</h1>
+        <h2 class="project-tagline">Blog post about the clocking an 8051</h2>
+        
+    </header>
+
+
+    <main id="content" class="main-content" role="main">
+        <i>
+    Categories: 8051-microcontroller
+    <br>
+    Written by
+    
+    <a href="/about/">Stefan Nikolaj</a>
+    
+    <br>
+    26 Mar 2022
+</i>
+<hr>
+<h3>The number <i>12</i></h3>
+<p>Most 8051s work with a clock speed from 0-24MHz, though some can go much faster. The 8051 can use a crystal or any external clock output. If you’re a true masochist, you can even clock your 8051 from a single button. Though, you may be surprised that you have to press 12 times for each instruction. Some will take 24, or even 48 cycles! This is because the 8051 essentially divides the input clock by 12. This is a remnant of its time, and most microprocessors from the period similarly divide their clock inputs by some integer, or end up using strange split-phase complex clock circuitry.</p>
+
+<h3>How to clock an 8051</h3>
+<p>You can clock the 8051 with a crystal or ceramic resonator connected to pins XTAL1 and XTAL2. These essentially work in a Pierce oscillator configuration. You can also supply your own signal to pin XTAL1, such as the aforementioned clicking-a-button-12-times, but you can include an off-chip oscillator, if you need a specific generated frequency, or even just have another microcontroller clocking your 8051. This is one of the things that make the 8051 special, its flexibility with input clocks due to its simplicity. You can even hold on and not supply a signal at all, it won’t mind! It will sit there, remembering all of the registers and wait for you to come back patiently, ready to resume work at a moment’s notice.</p>
+
+<p><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/doc4316.pdf">Atmel C51 Hardware Manual (microchip.com) (page 70)</a></p>
+
+
+        <footer class="site-footer">
+            <a href="/">Homepage</a><br>Written, designed and built by <a
+                href="/about/">Stefan Nikolaj</a>. Hosted on GitHub
+            Pages.
+        </footer>
+    </main>
+</body>
+
+</html>
+
+<style>
+    a:link {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
