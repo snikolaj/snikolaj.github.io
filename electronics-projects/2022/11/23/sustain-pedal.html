@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Building a sustain pedal (for my Yamaha DX7) | Stefan Nikolaj’s blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Building a sustain pedal (for my Yamaha DX7)" />
+<meta name="author" content="Stefan Nikolaj" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I have a Yamaha DX7." />
+<meta property="og:description" content="I have a Yamaha DX7." />
+<link rel="canonical" href="http://localhost:4000/electronics-projects/2022/11/23/sustain-pedal.html" />
+<meta property="og:url" content="http://localhost:4000/electronics-projects/2022/11/23/sustain-pedal.html" />
+<meta property="og:site_name" content="Stefan Nikolaj’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-11-23T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Building a sustain pedal (for my Yamaha DX7)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Stefan Nikolaj"},"dateModified":"2022-11-23T00:00:00+01:00","datePublished":"2022-11-23T00:00:00+01:00","description":"I have a Yamaha DX7.","headline":"Building a sustain pedal (for my Yamaha DX7)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/electronics-projects/2022/11/23/sustain-pedal.html"},"url":"http://localhost:4000/electronics-projects/2022/11/23/sustain-pedal.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style"
+        type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+<body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner" id="main-header">
+        <div class="background-banner-image">
+            <img id="banner-image" src="/backgrounds/electronics-projects.jpg"
+                alt="Banner background image">
+        </div>
+
+        <h1 class="project-name">Building a sustain pedal (for my Yamaha DX7)</h1>
+        <h2 class="project-tagline">I have a Yamaha DX7.</h2>
+        
+    </header>
+
+
+    <main id="content" class="main-content" role="main">
+        <i>
+    Categories: electronics-projects
+    <br>
+    Written by
+    
+    <a href="/about/">Stefan Nikolaj</a>
+    
+    <br>
+    23 Nov 2022
+</i>
+<hr>
+<p>I am a proud owner of a Yamaha DX7 digital synthesizer from 1984. It’s essential that I mention that. Because the DX7 is a digital synthesizer, it does not naturally have the expression pedals of a physical acoustic piano. Compared to a real piano, the DX7 (and most other synthesizers) uses electronic expression pedals, which are just a simple switch. For example, take the sustain pedal. When it’s activated, all notes played are “sustained”, which is useful for playing chords. They can either be normally-closed or normally-open sustain pedals, which refers to their state when nothing is pressed. A normally-open switch will be disconnected when not pressed, and connected when pressed, while a normally-closed switch is the opposite. When the synthesizer outputs a signal, it checks whether the signal it outputs is the same as the signal it receives through the loop. The simplest way to do this is with an open-drain signal, where a resistor pulls up an input pin, and if the switch is closed, it connects it to ground. This way, it’s easy to determine whether a switch is closed without any complex circuitry – many microcontrollers have open-drain and pullup capability built in.</p>
+
+<p><img src="/images/sustain_connector.jpg" alt="Image of the connector" style="display:block;margin:auto;" /></p>
+
+<p>Since I don’t have a sustain pedal, and official Yamaha sustain pedals are currently around 80$, I decided to build one myself. In my parts bin I have a footpedal that I bought on a trip to Austria which has both a normally-closed and a normally-open output. This appeared like a perfect choice for me, as I  could add a switch to change the polarity of the pedal and use it for any synthesizer I want. So, I took around five minutes and built up the circuit using the pedal, some wires, a small DPDT switch, and a 3.5mm output jack. Connecting it to my Yamaha DX7, it worked immediately. Not only that, but I found out that when changing the polarity, I can have the sustain be turned on when the sustain is not pressed, while I can press the pedal to turn the sustain on. This is really useful, since I can play chords and have them sustained automatically, while I play a melody on another synthesizer. The total price in parts came out to be a tenth of the official price, and I get more satisfaction knowing I designed and built it myself.</p>
+
+<p><img src="/images/sustain_whole_pedal.jpg" alt="Image of the pedal" style="display:block;margin:auto;padding-bottom:10px;" />
+<img src="/images/sustain_DX7.jpg" alt="Image of the pedal and the DX7" style="display:block;margin:auto;" /></p>
+
+<p>I have a Yamaha DX7.</p>
+
+
+        <footer class="site-footer">
+            <a href="/">Homepage</a><br>Written, designed and built by <a
+                href="/about/">Stefan Nikolaj</a>. Hosted on GitHub
+            Pages.
+        </footer>
+    </main>
+</body>
+
+</html>
+
+<style>
+    .page-header {
+        width: 100%;
+        position: relative;
+
+
+        z-index: 100;
+        overflow: hidden;
+    }
+
+    .background-banner-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: -100;
+    }
+
+    #banner-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: none;
+        filter: blur(3px);
+    }
+
+    .project-name {
+        -webkit-text-stroke: 0.5px black;
+    }
+
+    a:link {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    // checks if background image can be loaded (if it exists) - if yes, then unset the display none
+    var backgroundImage = new Image();
+    backgroundImage.src = "/backgrounds/electronics-projects.jpg";
+
+    backgroundImage.onload = function () {
+        document.getElementById("banner-image").style.display = "unset";
+        document.getElementById("main-header").style.backgroundColor = "transparent";
+        document.getElementById("main-header").style.backgroundImage = "none";
+    }
+</script>

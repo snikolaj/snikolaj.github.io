@@ -33,7 +33,12 @@
 <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
 
-    <header class="page-header" role="banner">
+    <header class="page-header" role="banner" id="main-header">
+        <div class="background-banner-image">
+            <img id="banner-image" src="/backgrounds/.jpg"
+                alt="Banner background image">
+        </div>
+
         <h1 class="project-name">Stefan Nikolaj's blog</h1>
         <h2 class="project-tagline">My blog, written and designed by me, where I talk about different projects I'm working on.</h2>
         
@@ -45,9 +50,9 @@
     <div class="column left"><p>Welcome to my site! Here you will find my projects organized in blog posts, general pages, info about me, ways to contact me and more. Mostly focused on programming and electronics, although other topics will be mentioned. This site is extremely minimalist and contains no advertisements or trackers, and is thus extremely eco-friendly and privacy-conscious! Enjoy your stay!</p>
 
 <h3>Featured post:</h3>
-<p><a href="/music/2022/11/06/crying-all-the-time-analysis.html">A short analysis of Crying All The Time</a><br />
-It’s a pretty good song!<br />
-<em>In category: music</em></p>
+<p><a href="/electronics-projects/2022/11/23/sustain-pedal.html">Building a sustain pedal (for my Yamaha DX7)</a><br />
+I have a Yamaha DX7.<br />
+<em>In category: electronics-projects</em></p>
 
 <h3>All posts:</h3>
 
@@ -187,6 +192,13 @@ Tutorial on how to balance equations easily using systems of equations.</li>
 <p>Posts documenting different electronics projects I build, of which there are many.</p>
 
 <ul>
+
+<li><a href="/electronics-projects/2022/11/23/sustain-pedal.html">Building a sustain pedal (for my Yamaha DX7)</a><br />
+<i>By 
+    <a href="/about/">Stefan Nikolaj</a>
+     on 23 Nov 2022</i><br />
+I have a Yamaha DX7.</li>
+<br />
 
 <li><a href="/electronics-projects/2022/10/11/diy-usb-uart.html">Building a dual-voltage USB-UART converter</a><br />
 <i>By 
@@ -377,6 +389,40 @@ I often enjoy transcribing songs and chord progressions, a small number of which
 </html>
 
 <style>
+    .page-header {
+        width: 100%;
+        position: relative;
+
+
+        z-index: 100;
+        overflow: hidden;
+    }
+
+    .background-banner-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: -100;
+    }
+
+    #banner-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: none;
+        filter: blur(3px);
+    }
+
+    .project-name {
+        -webkit-text-stroke: 0.5px black;
+    }
+
     a:link {
         color: #155799;
         background-color: transparent;
@@ -401,3 +447,15 @@ I often enjoy transcribing songs and chord progressions, a small number of which
         text-decoration: underline;
     }
 </style>
+
+<script>
+    // checks if background image can be loaded (if it exists) - if yes, then unset the display none
+    var backgroundImage = new Image();
+    backgroundImage.src = "/backgrounds/.jpg";
+
+    backgroundImage.onload = function () {
+        document.getElementById("banner-image").style.display = "unset";
+        document.getElementById("main-header").style.backgroundColor = "transparent";
+        document.getElementById("main-header").style.backgroundImage = "none";
+    }
+</script>
