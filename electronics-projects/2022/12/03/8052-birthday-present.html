@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Building an 8052 BASIC computer | Stefan Nikolaj’s blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Building an 8052 BASIC computer" />
+<meta name="author" content="Stefan Nikolaj" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="One of the coolest birthday presents ever." />
+<meta property="og:description" content="One of the coolest birthday presents ever." />
+<link rel="canonical" href="http://localhost:4000/electronics-projects/2022/12/03/8052-birthday-present.html" />
+<meta property="og:url" content="http://localhost:4000/electronics-projects/2022/12/03/8052-birthday-present.html" />
+<meta property="og:site_name" content="Stefan Nikolaj’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-12-03T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Building an 8052 BASIC computer" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Stefan Nikolaj"},"dateModified":"2022-12-03T00:00:00+01:00","datePublished":"2022-12-03T00:00:00+01:00","description":"One of the coolest birthday presents ever.","headline":"Building an 8052 BASIC computer","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/electronics-projects/2022/12/03/8052-birthday-present.html"},"url":"http://localhost:4000/electronics-projects/2022/12/03/8052-birthday-present.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style"
+        type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+<body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner" id="main-header">
+        <div class="background-banner-image">
+            <img id="banner-image" src="/backgrounds/electronics-projects.jpg"
+                alt="Banner background image">
+        </div>
+
+        <h1 class="project-name">Building an 8052 BASIC computer</h1>
+        <h2 class="project-tagline">One of the coolest birthday presents ever.</h2>
+        
+    </header>
+
+
+    <main id="content" class="main-content" role="main">
+        <i>
+    Categories: electronics-projects
+    <br>
+    Written by
+    
+    <a href="/about/">Stefan Nikolaj</a>
+    
+    <br>
+    03 Dec 2022
+</i>
+<hr>
+<h3 id="motivation">Motivation</h3>
+<p>I have a friend. Well, I have more than one, but I have a particularly peculiar friend. Now, according to both us and other friends, we’re both quite strange. Her birthday is coming up so I decided to make a particularly peculiar present to go along. For some reason only the DSM-5 or a priest could explain, she likes programming – particularly her TI-84 Plus CE calculator (the same model as one of my three Texas Instruments calculators). These calculators are programmed in BASIC, which is pretty neat. She also has basic knowledge in electronics and appears to want to learn more. Thus, combining these two I got the perfect idea for a birthday present.</p>
+
+<h3 id="a-forgotten-gem">A forgotten gem</h3>
+<p>For readers of the blog, you may know that I like the 8051 microcontroller, and some might even know that in around 1986 (as far as I could tell, from the datasheet’s release date) Intel released a version of the 8052 with a very powerful BASIC interpreter in ROM. Even though these were expensive at the time, they were meant for a wide audience and I’m surprised they didn’t catch on more – you basically had a Commodore 64 style BASIC terminal, with powerful math commands, GPIO, memory reading and writing, and wide expansion capabilities due to the 8052’s separate data and code spaces. With functions provided for everything one would want to do with an 8052 – full interrupts, PWM, timers, counters, a software DMA and even software error handling. All of this fit in a stock 8052’s ROM space and a minimal system can be made using three low-cost chips!</p>
+
+<h3 id="simple-and-elegant-design">Simple and elegant design</h3>
+<p>I decided to build one of these, since I had two 8052s on hand and I could source many more for cheap. I also needed to procrastinate on some schoolwork – senioritis is a real thing! Regardless, I had built 8052 computer systems before and knew exactly what to do and which latches to connect. I’ve grown to really like the 8052 and its elegance for the time, it’s a shame that Intel never developed their microcontroller business further, since the newer Intel microcontrollers based on x86 were also very cool before their discontinuation. The three chips required are an 8052 programmed with the BASIC ROM, an 8 bit latch (usually 74HC373 or 74HC573) and a Static RAM with a capacity larger than 2KB. I’m well stocked on all fronts, and played some videos while enjoying building the system on a perfboard – I didn’t even try to try the system on a breadboard, I was that confident that it would work.</p>
+
+<p><img src="/images/8052com_schematic.png" alt="Schematic of the computer" style="display:block;margin:auto;" /></p>
+
+<h3 id="oh-no">Oh no</h3>
+<p>After around two hours of construction, I finished the build. I connected it to a USB-to-UART converter and… it didn’t work. The Intel manual said to press space when connecting it, and an auto-baud routine will detect the crystal and baud rate automatically using a clever routine. With an 11.0592MHz crystal, it can run at 115200 baud due to the 8052’s Timer2. I used a cheap Cypress FX2 USB logic analyzer to see what was going on. The UART didn’t function at all, so I returned to the manual. It said that before the UART is initialized, the 8052 test memory locations by writing and reading values, until it reaches an invalid address – if the microcontroller writes data and when reading it back it doesn’t read back what it wrote, no RAM is present there.</p>
+
+<p>Since the 8052 didn’t respond to any writes, I then continued on with scoping the address and data lines, which gave a strange result – the writes did indeed work and the 32KB RAM was written to and read back properly. After an embarrassingly long time of troubleshooting, which included building a separate system on a breadboard, I discovered the issue. I socketed the SRAM, and the crappy socket didn’t touch the seventh data pin of the SRAM. D’oh! After pushing in the pin, everything worked. I’d say that I wasted a few hours, but I learned a bunch about troubleshooting and how to isolate problem areas through elimination and procedural testing. I started with checking the UART, then clocks, then read/write/chip select signals, then address and data pins, which narrowed down the issue to a physical connection, which I verified with a multimeter.</p>
+
+<p><img src="/images/8052com_debug.jpg" alt="Image of the computer with an Arduino connected" style="display:block;margin:auto;" /></p>
+
+<p>After I fixed this, I added two LEDs and two buttons to the free port on the 8052 which can be accessed through BASIC and some pin headers for connecting to a breadboard. Thus this became a development board as well as a basic computer. For the UART, to make it more permanent, I decided to salvage a dirt cheap CH340N USB-to-UART converter (requires only two external capacitors!), put it on a DIP adapter board and put a USB connector to it. I also put a 22uF capacitor as the main smoothing source. Despite the USB specification mandating a maximum of 10uF of capacitance on the USB line, since the wires I use for power are aluminium, they have a high enough resistance to resist the inrush current which the USB spec is afraid of. The real reason I used the 22uF capacitor is that it’s a really nice deep blue color. Yes, I am that shallow.</p>
+
+<h3 id="some-musings">Some musings</h3>
+<p>Once everything was finished and working, I was surprised at just how cool what I had made was. I’ll probably build one of these myself in the future, but I’ll expand it significantly, mostly to add a programmable ROM, character display, expanded IO, sound, and everything else you would need to have a complete retro computer setup.</p>
+
+<p><img src="/images/8052com.jpg" alt="Image of the finished build" style="display:block;margin:auto;" /></p>
+
+<p>Regardless, I’ll give this one to my friend, she deserves it. I just wish she, and other people, cared for me as much as I do for them.</p>
+
+
+        <footer class="site-footer">
+            <a href="/">Homepage</a><br>Written, designed and built by <a
+                href="/about/">Stefan Nikolaj</a>. Hosted on GitHub
+            Pages.
+        </footer>
+    </main>
+</body>
+
+</html>
+
+<style>
+    .page-header {
+        width: 100%;
+        position: relative;
+
+
+        z-index: 100;
+        overflow: hidden;
+    }
+
+    .background-banner-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: -100;
+    }
+
+    #banner-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: none;
+        filter: blur(3px);
+    }
+
+    .project-name {
+        -webkit-text-stroke: 0.5px black;
+    }
+
+    a:link {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    // checks if background image can be loaded (if it exists) - if yes, then unset the display none
+    var backgroundImage = new Image();
+    backgroundImage.src = "/backgrounds/electronics-projects.jpg";
+
+    backgroundImage.onload = function () {
+        document.getElementById("banner-image").style.display = "unset";
+        document.getElementById("main-header").style.backgroundColor = "transparent";
+        document.getElementById("main-header").style.backgroundImage = "none";
+    }
+</script>
