@@ -37,7 +37,7 @@
 
     <header class="page-header" role="banner" id="main-header">
         <div class="background-banner-image">
-            <img id="banner-image" src="/backgrounds/electronics-projects.jpg"
+            <img id="banner-image" src="/backgrounds/electronics-projects.webp"
                 alt="Banner background image">
         </div>
 
@@ -83,7 +83,7 @@
 <p>Still, even when knowing its internal workings, the datasheet or engineer’s way may not actually always yield the best result – in this case, the most famous PT2399 DIY design actually uses the chip in a way not described by its datasheet, which I will not describe here, rather just link the associated famous forum thread on <a href="https://www.diystompboxes.com/smfforum/index.php?topic=86297.0">diystompboxes.com, the most famous guitar pedal circuit design and analysis website</a>. The design I built was a modified version that’s considered one of the best simple PT2399 pedals around.</p>
 
 <figure>
-<img src="/images/pt2399_schematic.png" alt="Image of the PT2399 pedal schematic" style="display:block;margin:auto;" />
+<img src="/images/pt2399_schematic.webp" alt="Image of the PT2399 pedal schematic" style="display:block;margin:auto;" />
 <figcaption style="text-align:center"><i>The ideally small schematic!</i></figcaption>
 </figure>
 
@@ -94,7 +94,7 @@
 <p>Since the design was built without an enclosure, and I am not a guitarist, I decided to go with 3.5mm audio jack breakout boards instead of the usual 6.35mm, and placed the boards in a female socket, so that if I ever decide to add an enclosure I can easily connect external wires from a connector to the sockets. For the 9V input I decided to go with the ubiquitous guitar pedal 9V 6F22/LR22 battery. This results in the least noise, even though that wouldn’t be a problem in this design as it uses a 5V regulator with large capacitors anyway, and the only noise that would result would be from the digital switching in the PT2399 itself. I scavenged an old 9V battery connector from a broken clamp multimeter and added an input diode to protect against accidental reverse brushes with the battery. In retrospect, I should also have added a small-value current limiting resistor before the large capacitors, as is often added in guitar pedals. This both forms a low pass filter to limit noise further and provides slight added protection against reverse voltage.</p>
 
 <figure>
-<img src="/images/chorus-pedal.jpg" alt="Image of the finished pedal" style="display:block;margin:auto;" />
+<img src="/images/chorus-pedal.webp" alt="Image of the finished pedal" style="display:block;margin:auto;" />
 <figcaption style="text-align:center"><i>Elegantly placed on my dear E-mu Proteus 1/XR</i></figcaption>
 </figure>
 
@@ -180,7 +180,7 @@
 <script>
     // checks if background image can be loaded (if it exists) - if yes, then unset the display none
     var backgroundImage = new Image();
-    backgroundImage.src = "/backgrounds/electronics-projects.jpg";
+    backgroundImage.src = "/backgrounds/electronics-projects.webp";
 
     backgroundImage.onload = function () {
         document.getElementById("banner-image").style.display = "unset";

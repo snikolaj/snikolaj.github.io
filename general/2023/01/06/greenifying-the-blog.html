@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Greenifying the blog | Stefan Nikolaj’s blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Greenifying the blog" />
+<meta name="author" content="Stefan Nikolaj" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Long live WebP!" />
+<meta property="og:description" content="Long live WebP!" />
+<link rel="canonical" href="http://localhost:4000/general/2023/01/06/greenifying-the-blog.html" />
+<meta property="og:url" content="http://localhost:4000/general/2023/01/06/greenifying-the-blog.html" />
+<meta property="og:site_name" content="Stefan Nikolaj’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-06T01:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Greenifying the blog" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Stefan Nikolaj"},"dateModified":"2023-01-06T01:00:00+01:00","datePublished":"2023-01-06T01:00:00+01:00","description":"Long live WebP!","headline":"Greenifying the blog","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/general/2023/01/06/greenifying-the-blog.html"},"url":"http://localhost:4000/general/2023/01/06/greenifying-the-blog.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style"
+        type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+<body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner" id="main-header">
+        <div class="background-banner-image">
+            <img id="banner-image" src="/backgrounds/general.webp"
+                alt="Banner background image">
+        </div>
+
+        <h1 class="project-name">Greenifying the blog</h1>
+        <h2 class="project-tagline">Long live WebP!</h2>
+        
+    </header>
+
+
+    <main id="content" class="main-content" role="main">
+        <i>
+    Categories: general
+    <br>
+    Written by
+    
+    <a href="/about/">Stefan Nikolaj</a>
+    
+    <br>
+    06 Jan 2023
+</i>
+<hr>
+<p>You can call me a hipster, but this blog was meant to be “green” ever since the beginning. By that I mean that it should be minimal, simple and quick to load. Over time, though, I got carried away with my pretty nice camera and obsession with taking pictures of circuit boards, which led to the site taking up almost 100MB, which I could not accept for a blog with some images. Thus, I looked into ways to make it smaller.</p>
+
+<p>One of the first techniques I found, which I had never considered before, was to convert all images from JPG/PNG to WebP. Sources on the internet stated that this would result in a 25-34% decrease in file size, which would have been quite nice, since all I’d need to do is run a simple script and then replace all occurrences of JPG/PNG in the HTML with WebP. I was definitely not prepared for what I got.</p>
+
+<figure>
+<img src="/images/compression_example.webp" alt="Image of the size decrease" style="display:block;margin:auto;" />
+<figcaption style="text-align:center"><i>Not only does WebP look better, but it's much smaller as well</i></figcaption>
+</figure>
+
+<p>Before running the script, all of the images took up 64.9MB. After the script? 12.4MB. That’s not 25-34% decrease, that’s 81%! (this blog post was delayed due to the temporary death of my TI-84 Plus Silver Edition calculator, without which I couldn’t do this calculation, and it turns out that one of the batteries in it went negative, which <a href="https://www.panasonic-batteries.com/en/faq/why-does-battery-show-minus-voltage-when-checked-voltmeter">can actually happen under specific conditions</a>) This is great for my blog and a tip for everyone else who wants to do blogs. Both relevant browsers (Chrome and Firefox) support WebP nowadays, and I believe that reducing file size for the 99% of internet users is much more important than supporting those with archaic browsers.</p>
+
+<figure>
+<img src="/images/compression_example_2.webp" alt="Image of the file size decrease of the previous image" style="display:block;margin:auto;" />
+<figcaption style="text-align:center"><i>Even this image decreased from 181KB to 39KB when converted</i></figcaption>
+</figure>
+
+<p>Google releases and offers documentation for WebP conversion tools. You can download the <a href="https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html">whole WebP suite here</a>.
+You can look at the documentation <a href="https://developers.google.com/speed/webp/docs/using">here (the relevant file for conversion to WebP is cwebp.exe)</a>.
+To batch convert to WebP, you can use <a href="https://github.com/kasipavankumar/batch-conversion-to-webp">this script (among others)</a>.</p>
+
+
+        <footer class="site-footer">
+            <a href="/">Homepage</a><br>Written, designed and built by <a
+                href="/about/">Stefan Nikolaj</a>. Hosted on GitHub
+            Pages.
+        </footer>
+    </main>
+</body>
+
+</html>
+
+<style>
+    .page-header {
+        width: 100%;
+        position: relative;
+
+
+        z-index: 100;
+        overflow: hidden;
+    }
+
+    .background-banner-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: -100;
+    }
+
+    #banner-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: none;
+        filter: blur(3px);
+    }
+
+    .project-name {
+        -webkit-text-stroke: 0.5px black;
+    }
+
+    a:link {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    // checks if background image can be loaded (if it exists) - if yes, then unset the display none
+    var backgroundImage = new Image();
+    backgroundImage.src = "/backgrounds/general.webp";
+
+    backgroundImage.onload = function () {
+        document.getElementById("banner-image").style.display = "unset";
+        document.getElementById("main-header").style.backgroundColor = "transparent";
+        document.getElementById("main-header").style.backgroundImage = "none";
+    }
+</script>

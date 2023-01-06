@@ -35,7 +35,7 @@
 
     <header class="page-header" role="banner" id="main-header">
         <div class="background-banner-image">
-            <img id="banner-image" src="/backgrounds/.jpg"
+            <img id="banner-image" src="/backgrounds/.webp"
                 alt="Banner background image">
         </div>
 
@@ -50,9 +50,9 @@
     <div class="column left"><p>Welcome to my site! Here you will find my projects organized in blog posts, general pages, info about me, ways to contact me and more. Mostly focused on programming and electronics, although other topics will be mentioned. This site is extremely minimalist and contains no advertisements or trackers, and is thus extremely eco-friendly and privacy-conscious! Enjoy your stay!</p>
 
 <h3>Featured post:</h3>
-<p><a href="/electronics-projects/2022/12/03/8052-birthday-present.html">Building an 8052 BASIC computer</a><br />
-One of the coolest birthday presents ever.<br />
-<em>In category: electronics-projects</em></p>
+<p><a href="/general/2023/01/06/greenifying-the-blog.html">Greenifying the blog</a><br />
+Long live WebP!<br />
+<em>In category: general</em></p>
 
 <h3>All posts:</h3>
 
@@ -126,6 +126,13 @@ Salvaging a broken solar flashlight</li>
 <p>General posts which don’t fit into a specific category.</p>
 
 <ul>
+
+<li><a href="/general/2023/01/06/greenifying-the-blog.html">Greenifying the blog</a><br />
+<i>By 
+    <a href="/about/">Stefan Nikolaj</a>
+     on 06 Jan 2023</i><br />
+Long live WebP!</li>
+<br />
 
 <li><a href="/general/2022/08/15/lessons-learned-repair.html">A log and lessons learned from electronics repair</a><br />
 <i>By 
@@ -458,7 +465,7 @@ I often enjoy transcribing songs and chord progressions, a small number of which
 <script>
     // checks if background image can be loaded (if it exists) - if yes, then unset the display none
     var backgroundImage = new Image();
-    backgroundImage.src = "/backgrounds/.jpg";
+    backgroundImage.src = "/backgrounds/.webp";
 
     backgroundImage.onload = function () {
         document.getElementById("banner-image").style.display = "unset";
