@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Crafting the USB-MIDI converter of my dreams! | Stefan Nikolaj’s blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Crafting the USB-MIDI converter of my dreams!" />
+<meta name="author" content="Stefan Nikolaj" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A year and one hour in the making…" />
+<meta property="og:description" content="A year and one hour in the making…" />
+<link rel="canonical" href="http://localhost:4000/electronics-projects/2023/01/08/usb-to-midi.html" />
+<meta property="og:url" content="http://localhost:4000/electronics-projects/2023/01/08/usb-to-midi.html" />
+<meta property="og:site_name" content="Stefan Nikolaj’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-08T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Crafting the USB-MIDI converter of my dreams!" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Stefan Nikolaj"},"dateModified":"2023-01-08T00:00:00+01:00","datePublished":"2023-01-08T00:00:00+01:00","description":"A year and one hour in the making…","headline":"Crafting the USB-MIDI converter of my dreams!","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/electronics-projects/2023/01/08/usb-to-midi.html"},"url":"http://localhost:4000/electronics-projects/2023/01/08/usb-to-midi.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style"
+        type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+<body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner" id="main-header">
+        <div class="background-banner-image">
+            <img id="banner-image" src="/backgrounds/electronics-projects.webp"
+                alt="Banner background image">
+        </div>
+
+        <h1 class="project-name">Crafting the USB-MIDI converter of my dreams!</h1>
+        <h2 class="project-tagline">A year and one hour in the making...</h2>
+        
+    </header>
+
+
+    <main id="content" class="main-content" role="main">
+        <i>
+    Categories: electronics-projects
+    <br>
+    Written by
+    
+    <a href="/about/">Stefan Nikolaj</a>
+    
+    <br>
+    08 Jan 2023
+</i>
+<hr>
+<p>I love music and I love synthesizers. I’ve already written this introduction in a previous blog post. At the time of writing, I have five synthesizers – Yamaha DX7, Korg M1, Yamaha Reface CS, E-mu Proteus/1 XR and Korg Volca Drum (it counts). Most of them are very old and made before the time computer-synthesizer communication was seen as societally acceptable. In fact, the DX7 technically came out before MIDI existed, meaning that its MIDI implementation is a bit strange. USB? Forget about it. The DX7, temporally, is as far from USB as it is from the PDP-11.</p>
+
+<p>However, I can’t play five synthesizers at once. Usually, people use a MIDI sequencer for this, like the Arturia BeatStep Pro (like one of my favorite youtuber/musicians Look Mum No Computer, who uses many of them), but they’re 300$ each and I’d need multiple. So, as always, to the workbench I go.</p>
+
+<p>Honestly, I’ve been trying to crack the issue of USB-MIDI communication for almost a year now. It’s not that I haven’t done it, it’s just that all of my previous attempts were somehow limited. The farthest I got is with the PIC16F1459 (a favorite over here), where I had practically everything working, but eventually gave up because of it having only one MIDI (UART) connection. I couldn’t emulate another UART since the anemic PIC architecture was already being pushed to its limits by my processing code.</p>
+
+<p>I was in the city where the only two electronics stores in the country are, visiting some close friends, and decided to randomly buy a Raspberry Pi Pico. When I returned and looked for a problem to fix with my solution, I found out that Adafruit (the guys who make most of the notable Arduino libraries) had actually made a USB MIDI library for the Pico, in Python. Now, I hadn’t used Python in a month, but just strolling through the mediocre documentation and two examples, I instantly managed to get code up and running for one MIDI channel, in around 20 lines of code. In comparison, the PIC code that took around a month to write had many thousands of lines of code, of which I personally wrote around 1000 and the rest is incomprehensible USB library code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">busio</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">usb_midi</span>
+<span class="kn">import</span> <span class="nn">adafruit_midi</span>
+
+<span class="kn">from</span> <span class="nn">adafruit_midi.timing_clock</span> <span class="kn">import</span> <span class="n">TimingClock</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.channel_pressure</span> <span class="kn">import</span> <span class="n">ChannelPressure</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.control_change</span> <span class="kn">import</span> <span class="n">ControlChange</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.note_off</span> <span class="kn">import</span> <span class="n">NoteOff</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.note_on</span> <span class="kn">import</span> <span class="n">NoteOn</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.pitch_bend</span> <span class="kn">import</span> <span class="n">PitchBend</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.polyphonic_key_pressure</span> <span class="kn">import</span> <span class="n">PolyphonicKeyPressure</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.program_change</span> <span class="kn">import</span> <span class="n">ProgramChange</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.start</span> <span class="kn">import</span> <span class="n">Start</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.stop</span> <span class="kn">import</span> <span class="n">Stop</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.system_exclusive</span> <span class="kn">import</span> <span class="n">SystemExclusive</span>
+<span class="kn">from</span> <span class="nn">adafruit_midi.midi_message</span> <span class="kn">import</span> <span class="n">MIDIUnknownEvent</span>
+
+<span class="n">uart_1</span> <span class="o">=</span> <span class="n">busio</span><span class="p">.</span><span class="n">UART</span><span class="p">(</span><span class="n">tx</span><span class="o">=</span><span class="n">board</span><span class="p">.</span><span class="n">GP0</span><span class="p">,</span> <span class="n">rx</span><span class="o">=</span><span class="n">board</span><span class="p">.</span><span class="n">GP1</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">31250</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">uart_2</span> <span class="o">=</span> <span class="n">busio</span><span class="p">.</span><span class="n">UART</span><span class="p">(</span><span class="n">tx</span><span class="o">=</span><span class="n">board</span><span class="p">.</span><span class="n">GP4</span><span class="p">,</span> <span class="n">rx</span><span class="o">=</span><span class="n">board</span><span class="p">.</span><span class="n">GP5</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">31250</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">usb_midi</span> <span class="o">=</span> <span class="n">adafruit_midi</span><span class="p">.</span><span class="n">MIDI</span><span class="p">(</span><span class="n">midi_in</span><span class="o">=</span><span class="n">usb_midi</span><span class="p">.</span><span class="n">ports</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">in_channel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">midi_out</span><span class="o">=</span><span class="n">usb_midi</span><span class="p">.</span><span class="n">ports</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">in_buf_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="n">uart_midi_1</span> <span class="o">=</span> <span class="n">adafruit_midi</span><span class="p">.</span><span class="n">MIDI</span><span class="p">(</span><span class="n">midi_in</span><span class="o">=</span><span class="n">uart_1</span><span class="p">,</span> <span class="n">in_channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">midi_out</span><span class="o">=</span><span class="n">uart_1</span><span class="p">,</span> <span class="n">out_channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">in_buf_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">uart_midi_2</span> <span class="o">=</span> <span class="n">adafruit_midi</span><span class="p">.</span><span class="n">MIDI</span><span class="p">(</span><span class="n">midi_in</span><span class="o">=</span><span class="n">uart_2</span><span class="p">,</span> <span class="n">in_channel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">midi_out</span><span class="o">=</span><span class="n">uart_2</span><span class="p">,</span> <span class="n">out_channel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_buf_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">usb_msg</span> <span class="o">=</span> <span class="n">usb_midi</span><span class="p">.</span><span class="n">receive</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">usb_msg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">usb_msg</span><span class="p">,</span> <span class="n">MIDIUnknownEvent</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">usb_msg</span><span class="p">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Received on USB 1:"</span><span class="p">,</span> <span class="n">usb_msg</span><span class="p">,</span> <span class="s">"at"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="n">monotonic</span><span class="p">())</span>
+            <span class="n">uart_midi_1</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">usb_msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">usb_msg</span><span class="p">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Received on USB 2:"</span><span class="p">,</span> <span class="n">usb_msg</span><span class="p">,</span> <span class="s">"at"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="n">monotonic</span><span class="p">())</span>
+            <span class="n">uart_midi_2</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">usb_msg</span><span class="p">)</span>
+
+    <span class="n">uart_msg_1</span> <span class="o">=</span> <span class="n">uart_midi_1</span><span class="p">.</span><span class="n">receive</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">uart_msg_1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">uart_msg_1</span><span class="p">,</span> <span class="n">MIDIUnknownEvent</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Received on UART 1:"</span><span class="p">,</span> <span class="n">uart_msg_1</span><span class="p">,</span> <span class="s">"at"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="n">monotonic</span><span class="p">())</span>
+        <span class="n">usb_midi</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">uart_msg_1</span><span class="p">)</span>
+
+    <span class="n">uart_msg_2</span> <span class="o">=</span> <span class="n">uart_midi_2</span><span class="p">.</span><span class="n">receive</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">uart_msg_2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">uart_msg_2</span><span class="p">,</span> <span class="n">MIDIUnknownEvent</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Received on UART 2:"</span><span class="p">,</span> <span class="n">uart_msg_2</span><span class="p">,</span> <span class="s">"at"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="n">monotonic</span><span class="p">())</span>
+        <span class="n">usb_midi</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">uart_msg_2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Emboldened by this initial success, I went and built a board to house the Pico, two MIDI channels and associated circuitry. I used fully standard, MIDI spec circuits and components, except for the optocouplers – which were 6N137 instead of 6N138, which should allegedly be worse but I’ve never had them malfunction. At least not at the very slow 31250 baud midi rate. I built the MIDI output circuit with an NPN transistor since I wanted my circuit to be compact and an entire DIP inverter IC does not fit into that definition. However, the NPN transistors invert the signal, while CircuitPython has no way of inverting the UART, even though that’s present in practically every modern microcontroller. As a result, I had to add a bodge transistor inverter, which means that I probably could have fit a DIP inverter in there regardless. In the end, it turned out fine. I promptly added interfacing circuitry for another MIDI channel and everything worked perfectly.</p>
+
+<p><img src="/images/pi_pico_midi_schematic.webp" alt="Schematic of the Pico MIDI" style="display:block;margin:auto;" /></p>
+
+<p>One issue I had during the code writing was a significant delay between pressing notes on the keyboard and them appearing on the screen. From USB → UART there was no delay, but UART → had a one second delay. This wasn’t actually between the microcontroller and the PC, as often happens (due to operating system overhead) – it was actually between UART reception and microcontroller. It turns out that the library had its own timeout function for the UART which defaulted to one second. Fixing this made it work perfectly, with a total delay of around 30ms – as good as any other USB-MIDI converter on the market.</p>
+
+<p><img src="/images/pi_pico_midi.webp" alt="Image of the finished build" style="display:block;margin:auto;" /></p>
+
+<p>Now, all that’s left to do is to add more UART channels using the PIO, which should allow me to make more MIDI channels than I have synthesizers. Due to the simplicity of the output circuitry, all I would need are more connectors and board space, while the extremely fast Pi Pico plus PIO handles everything else. So far, I’m extremely impressed by the Pico and plan on buying many more – I just need to find a good source.</p>
+
+<p><a href="https://github.com/snikolaj/pico_midician">Link to the Github repository</a></p>
+
+<p>One interesting thought is how previously I planned on turning my PIC16F1459-based project into something much more complex in order to expand its capabilities. I designed a bus system with multiple 8051s handling UARTs and buffering and timing and eeeeverything. Now, one tiny chip – cheaper than the PIC alone – replaced all of that, using an even slower programming language. Technology truly is amazing. Yet, it’s scary how fast something like a PIC can become obsolete. Even though PICs are very old in technological terms, they’re still only 40 years old. I can’t imagine equipment built in the 1380s becoming obsolete in the 1420s, and even recently weapons and technology from WW1 saw use in WW2, some are even still in use today. Yet, it depends on the technology as well. I can’t wait to see what the future holds, if this is how far we have gone – even though I’m very scared as well.</p>
+
+
+        <footer class="site-footer">
+            <a href="/">Homepage</a><br>Written, designed and built by <a
+                href="/about/">Stefan Nikolaj</a>. Hosted on GitHub
+            Pages.
+        </footer>
+    </main>
+</body>
+
+</html>
+
+<style>
+    .page-header {
+        width: 100%;
+        position: relative;
+
+
+        z-index: 100;
+        overflow: hidden;
+    }
+
+    .background-banner-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: -100;
+    }
+
+    #banner-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: none;
+        filter: blur(3px);
+    }
+
+    .project-name {
+        -webkit-text-stroke: 0.5px black;
+    }
+
+    a:link {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    // checks if background image can be loaded (if it exists) - if yes, then unset the display none
+    var backgroundImage = new Image();
+    backgroundImage.src = "/backgrounds/electronics-projects.webp";
+
+    backgroundImage.onload = function () {
+        document.getElementById("banner-image").style.display = "unset";
+        document.getElementById("main-header").style.backgroundColor = "transparent";
+        document.getElementById("main-header").style.backgroundImage = "none";
+    }
+</script>
