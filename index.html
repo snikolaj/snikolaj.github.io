@@ -50,9 +50,9 @@
     <div class="column left"><p>Welcome to my site! Here you will find my projects organized in blog posts, general pages, info about me, ways to contact me and more. Mostly focused on programming and electronics, although other topics will be mentioned. This site is extremely minimalist and contains no advertisements or trackers, and is thus extremely eco-friendly and privacy-conscious! Enjoy your stay!</p>
 
 <h3>Featured post:</h3>
-<p><a href="/electronics-projects/2023/01/08/usb-to-midi.html">Crafting the USB-MIDI converter of my dreams!</a><br />
-A year and one hour in the making…<br />
-<em>In category: electronics-projects</em></p>
+<p><a href="/media-reviews/2023/01/14/cells-at-work-code-black-review.html">Cells at Work! Code Black Review</a><br />
+A dark and fascinating anime about the human body.<br />
+<em>In category: media-reviews</em></p>
 
 <h3>All posts:</h3>
 
@@ -309,6 +309,21 @@ I often enjoy transcribing songs and chord progressions, a small number of which
 
 </ul>
 
+<h4 class="link-header" id="media-reviews">Media-reviews:</h4>
+
+<p>Reviews of media (books and anime) that I found notable and interesting to discuss.</p>
+
+<ul>
+
+<li><a href="/media-reviews/2023/01/14/cells-at-work-code-black-review.html">Cells at Work! Code Black Review</a><br />
+<i>By 
+    <a href="/about/">Stefan Nikolaj</a>
+     on 14 Jan 2023</i><br />
+A dark and fascinating anime about the human body.</li>
+<br />
+
+</ul>
+
 <p>This blog is dedicated to my dearest friend Sara, who constantly pushes me to improve myself and my skills.</p>
 
 <script>
@@ -320,7 +335,10 @@ I often enjoy transcribing songs and chord progressions, a small number of which
         linkTitles[i].innerText = linkTitles[i].innerText.replace("-", " "); // replace the dashes in the text with spaces
     }
 
-    
+    // load background image specifically for the index
+    var indexBackground = document.getElementById("banner-image");
+    indexBackground.src = "/backgrounds/code-bg-1.webp";
+    indexBackground.style.display = "block";
 </script>
 
 </div>
@@ -353,6 +371,8 @@ I often enjoy transcribing songs and chord progressions, a small number of which
             <li><a href="/#music">music</a></li>
             
             <li><a href="/#македонски">македонски</a></li>
+            
+            <li><a href="/#media-reviews">media-reviews</a></li>
             
         </ul>
         <h3>Featured Videos:</h3>
