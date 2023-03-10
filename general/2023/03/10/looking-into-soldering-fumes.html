@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>What are soldering fumes made of? | Stefan Nikolaj’s blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="What are soldering fumes made of?" />
+<meta name="author" content="Stefan Nikolaj" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A smell as sweet and deadly as an expensive perfume. Featuring the MQ-135 gas sensor." />
+<meta property="og:description" content="A smell as sweet and deadly as an expensive perfume. Featuring the MQ-135 gas sensor." />
+<link rel="canonical" href="http://localhost:4000/general/2023/03/10/looking-into-soldering-fumes.html" />
+<meta property="og:url" content="http://localhost:4000/general/2023/03/10/looking-into-soldering-fumes.html" />
+<meta property="og:site_name" content="Stefan Nikolaj’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-03-10T10:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="What are soldering fumes made of?" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Stefan Nikolaj"},"dateModified":"2023-03-10T10:00:00+01:00","datePublished":"2023-03-10T10:00:00+01:00","description":"A smell as sweet and deadly as an expensive perfume. Featuring the MQ-135 gas sensor.","headline":"What are soldering fumes made of?","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/general/2023/03/10/looking-into-soldering-fumes.html"},"url":"http://localhost:4000/general/2023/03/10/looking-into-soldering-fumes.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style"
+        type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+</head>
+
+<body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner" id="main-header">
+        <div class="background-banner-image">
+            <img id="banner-image" src="/backgrounds/general.webp"
+                alt="Banner background image">
+        </div>
+
+        <h1 class="project-name">What are soldering fumes made of?</h1>
+        <h2 class="project-tagline">A smell as sweet and deadly as an expensive perfume. Featuring the MQ-135 gas sensor.</h2>
+        
+    </header>
+
+
+    <main id="content" class="main-content" role="main">
+        <i>
+    Categories: general
+    <br>
+    Written by
+    
+    <a href="/about/">Stefan Nikolaj</a>
+    
+    <br>
+    10 Mar 2023
+</i>
+<hr>
+<h3 id="introduction-to-soldering">Introduction to soldering</h3>
+<p>Unless you can afford SMT assembly for every project, any kind of electronics work will eventually require you to solder something. Soldering produces sweet-smelling fumes that are pleasant in small amounts, and after soldering for a while you get a headache and lung irritation. At least I do. But what are these fumes made out of?</p>
+
+<p>Most solder is made of 60% tin and 40% lead. Tin is pretty harmless, but that lead seems quite nasty (lead is a very potent neurotoxin after all). However, <a href="https://ehs.mit.edu/wp-content/uploads/EHS-0167.pdf">according to a document from MIT</a> as well as common sense, the lead gets nowhere near its vaporization temperature (1750 degrees Celsius) when most soldering irons operate at around 300 degrees Celsius. But if the lead is not vaporizing, then why do solder fumes smell delicious?</p>
+
+<h3 id="the-chemistry-behind-the-gases">The chemistry behind the gases</h3>
+<p>Solder contains a small amount of rosin-based flux used to prevent oxidation when soldering. The flux is made up of pine tree sap, which means that it’s a lovely organic compound. As with other organic compounds, heating them up tears them apart, and rosin-based flux likes to tear apart into “aliphatic aldehydes (like formaldehyde) and hydrochloric acid and other gases containing benzene, toluene, styrene, phenol, chlorophenol, and isopropyl alcohol” (from the MIT source). I’d definitely agree with this, as solder smells both quite sweet (like pine trees) and pretty sour at times (like formaldehyde). However, I wanted to test out just how bad the generation of these gases is, since during winter I can’t keep my window open and let the solder fumes out. I just have to wait for my air purifier to work – and indeed it works very hard when I’m soldering. It detects solder fumes and starts whirring, however it also takes a while for it to detect the fumes, meaning that they’re probably not that concentrated – right? Millions of people solder and they seem perfectly fine… right?</p>
+
+<p>MIT sure seems like a decent source but their recommendations of gloves, a lab coat and eye protection for soldering seem excessive. I don’t solder very regularly – maybe once per two weeks for around an hour. Still, their fervent warnings made me try and research this topic by myself. Since solder fumes are mostly organic chemicals, I looked into a way to detect them without building my own lab, and I found the MQ-135 gas sensor. <a href="https://www.olimex.com/Products/Components/Sensors/Gas/SNS-MQ135/resources/SNS-MQ135.pdf">According to the datasheet, it detects just about everything</a>, which is fine for me since I want to know about every gas that comes out.</p>
+
+<h3 id="the-main-star-of-the-show---mq-135">The main star of the show - MQ-135</h3>
+<p>The operation of the sensor is pretty cool. <a href="https://jayconsystems.com/blog/understanding-a-gas-sensor">This article</a>, hidden under a sea of SEO-optimized auto-generated results gives a nice overview. Essentially, there is a heater (low resistance resistor) inside the sensor which heats up and ionizes passing gases. These gases then get absorbed by the heating element and decrease the resistance of an internal sense resistor. Combining this with an external voltage divider gives a simple analog output voltage that is proportional to the amount of gases present nearby to ionize.</p>
+
+<p>The MQ-135 is quite a “dumb” sensor – it just outputs an analog voltage when it detects any of the gases it can detect, which is also fine by me. I got a module for cheap and installed <a href="https://github.com/miguel5612/MQSensorsLib">a decent Arduino library which handles all the regression analysis of the data for me</a>. I first uploaded example code from the library to an Arduino Uno, however it crashed the Uno when I tried to run it. At first this confused me and I tried to look for a solution, but I immediately realized that this is a project that I’ll only do once. Time to bring out the big guns – an STM32F411. The library now ran perfectly.</p>
+
+<p>The next step involved actually testing the sensor with substances that I know release organic vapors. I set up the sensor in an empty room and let it heat up for it to calibrate. I let the library do the heavy lifting while I talked to friends on the phone. After an hour or two, the sensor was quite warm (as it should be). Noting down the resistance in ambient air with a few intervals, I got to a sense resistor resistance of 175Kohm, which is within the datasheet’s range for possible results, near the maximum resistance, meaning that my air purifier was doing its job marvelously. According to the library, the concentration of detectable gases in my room was 4ppm, which is quite nice.</p>
+
+<h3 id="measuring-with-the-sensor">Measuring with the sensor</h3>
+<p>Now, though, I wanted to go bigger (numerically, of course). Breathing at the sensor increased the ppm to around 10, which means that it was able to detect CO2 as it claimed (among other gases in my breath). I then took a freshly emptied beer can (not my own doing) and held the sensor module over the opening. The sensor quickly rose to around 1400ppm! Beer, of course, contains ethanol and other organic stuff, and it has quite a strong smell, meaning that releases many vapors. Since this result was very promising, I decided to go even bigger!</p>
+
+<p>I contacted my chemistry teacher, who seemed excited at my project idea! She thankfully let me test a few safe organic compounds – 96% ethanol, 99% acetone and IPA (isopropyl alcohol) with an unknown concentration (probably 99%). Testing this in a lab also meant that I could have some decent equipment and somewhat standardize my results based on pure substances. Turning on the sensor in the room and waiting for it to heat up gave a result of 12.46ppm ambient gas concentration. I then added the substances that were to be tested. This gave me the following results (the peak ppm result detected when placed over a beaker containing 20ml of each solution):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Ethanol (empty beer can)</th>
+      <th>Ethanol (96% concentration)</th>
+      <th>Isopropyl Alcohol (~99% concentration)</th>
+      <th>Acetone (99% concentration)</th>
+      <th>Hand Sanitizer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sensor 5cm away</td>
+      <td>/</td>
+      <td>413.00ppm</td>
+      <td>127.00ppm</td>
+      <td>1041.44ppm</td>
+      <td>44.41ppm</td>
+    </tr>
+    <tr>
+      <td>Sensor 1cm away</td>
+      <td>1403.00ppm</td>
+      <td>1308.44ppm</td>
+      <td>182.68ppm</td>
+      <td>2167.00ppm</td>
+      <td>/</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>These results were quite interesting and consistent with reality. The result with the beer can was strange, since the ethanol in beer is much less concentrated, and the can was empty! The only explanation I have is that the ethanol in the beer had time to evaporate and stay inside the can, while the concentrated ethanol didn’t start to evaporate much yet. However, that is inconsistent with the fact that even leaving the solutions for 20+ minutes resulted in a practically identical ppm measurement. Also, the beer can had a much stronger smell than the concentrated ethanol. Qualitatively, I would say that the beer can and the acetone were approximately identical in the strength of their smell, which the data supports. It’s also important to note that for all the measurements listed, these results were their peak values, and the actual values fluctuated at around 30% less than the measured, however they all consistently fluctuated at that range.</p>
+
+<figure>
+<img src="/images/mq-135_setup.webp" alt="Picture of the chemicals used and how the sensor was connected" style="display:block;margin:auto;" />
+<figcaption style="text-align:center"><i>The experimental setup with the MQ-135 sensor and all the cehmicals</i></figcaption>
+</figure>
+
+<p>Now, let’s go back home and compare these results to the soldering fumes. I decided to do a bit of soldering myself and measure the concentration of the gas that would develop. First, measuring the soldering workbench without doing any soldering (just clean air) gives a result of 2.3ppm. That seems stellar, and the air in my room is indeed very nice to breathe. Thanks, mom and dad! After doing some soldering (around 20 pins, not that much) I measured the ppm again, and it gave a result of… 3.6ppm. I thought this was an error with the measurement, so I soldered a lot more and measured it again. 3.3ppm. Breathing increased the ppm more than soldering. That’s both relieving and disappointing.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+<p>One downside to this method is that I don’t know if the nastiest gases like formaldehyde can be detected by the sensor and I didn’t dare try. Since toluene and phenol are present, they are likely the source of the sweet smell, but I don’t have any of those either. I sure hope nobody adds three nitrogen molecules to that toluene! Still, my conclusion is that in the small amounts that I do it, plus my air purifier and PC fan blowing away solder fumes, soldering won’t affect me very negatively. I’m just worried that over time I might have done irreversible damage to myself when soldering irresponsibly in the past. However, I can’t change it, and whatever hobby I do I’ll likely have some sort of exposure to nasty things (at least the hobbies I do), so why not have it be a small ppm increase rather than doing organic synthesis with formaldehyde and phenol in my bedroom (coming soon) (just kidding).</p>
+
+
+        <footer class="site-footer">
+            <a href="/">Homepage</a><br>Written, designed and built by <a
+                href="/about/">Stefan Nikolaj</a>. Hosted on GitHub
+            Pages.
+        </footer>
+    </main>
+</body>
+
+</html>
+
+<style>
+    .page-header {
+        width: 100%;
+        position: relative;
+
+
+        z-index: 100;
+        overflow: hidden;
+    }
+
+    .background-banner-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: -100;
+    }
+
+    #banner-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: none;
+        filter: blur(3px);
+    }
+
+    .project-name {
+        -webkit-text-stroke: 0.5px black;
+    }
+
+    a:link {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #155799;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    // checks if background image can be loaded (if it exists) - if yes, then unset the display none
+    var backgroundImage = new Image();
+    backgroundImage.src = "/backgrounds/general.webp";
+
+    backgroundImage.onload = function () {
+        document.getElementById("banner-image").style.display = "unset";
+        document.getElementById("main-header").style.backgroundColor = "transparent";
+        document.getElementById("main-header").style.backgroundImage = "none";
+    }
+</script>
